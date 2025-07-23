@@ -15,8 +15,7 @@ pipeline {
     stage('Checkout') {
       steps {
         sh 'echo passed'
-        // Uncomment below if you want to checkout your repo
-        // git branch: 'main', url: 'https://github.com/prathyusharathnamolla/Jenkins-CICD.git'
+        git branch: 'main', url: 'https://github.com/prathyusharathnamolla/Jenkins-CICD.git'
       }
     }
     stage('Build and Test') {
