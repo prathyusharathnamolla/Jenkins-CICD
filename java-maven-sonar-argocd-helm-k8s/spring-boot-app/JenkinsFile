@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'maven:3.8.6'
+      image 'prathyu12/maven-docker:3.8.6'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
@@ -37,7 +37,7 @@ pipeline {
     }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "prathyu12/maven-docker:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "prathyu12/ultimate-cicd:${BUILD_NUMBER"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
