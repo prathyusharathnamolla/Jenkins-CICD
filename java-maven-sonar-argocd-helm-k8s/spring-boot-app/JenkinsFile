@@ -6,6 +6,11 @@ pipeline {
     }
   }
   stages {
+    stage('Prepare Git Safe Directory') {
+      steps {
+        sh 'git config --global --add safe.directory /var/lib/jenkins/workspace/DevOpsPipeline'
+      }
+    }
     stage('Check Java and Maven versions') {
       steps {
         sh 'java -version'
@@ -17,13 +22,6 @@ pipeline {
         git branch: 'main', url: 'https://github.com/prathyusharathnamolla/Jenkins-CICD.git'
       }
     }
-    stage('Debug') {
-      steps {
-         sh 'pwd'
-         sh 'ls -la'
-         sh 'git status'
-  }
-}
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
