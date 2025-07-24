@@ -48,7 +48,7 @@ pipeline {
         }
       }
     }
-    stage('Update Deployment File') {
+   stage('Update Deployment File') {
   environment {
     GIT_REPO_NAME = "Jenkins-CICD"
     GIT_USER_NAME = "prathyusharathnamolla"
@@ -56,12 +56,23 @@ pipeline {
   steps {
     withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
       sh '''
-        cd $WORKSPACE
+        # Change directory to where the repo is checked out
+        cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
+
+        # Configure git user
         git config user.email "prathyusha.rathnam@gmail.com"
         git config user.name "prathyusharathnamolla"
-        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-        git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+
+        # Update the image tag in the deployment manifest
+        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" ../spring-boot-app-manifests/deployment.yml
+
+        # Stage the changed deployment file
+        git add ../spring-boot-app-manifests/deployment.yml
+
+        # Commit changes, ignore if nothing to commit
         git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
+
+        # Push to GitHub using the token
         git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
       '''
     }
