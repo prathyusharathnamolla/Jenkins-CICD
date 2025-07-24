@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/your-username/your-gitops-repo.git'  # Your Git repo URL
+    repoURL: 'https://github.com/prathyusharathnamolla/Jenkins-CICD.git'  # Your Git repo URL
     targetRevision: HEAD
     path: spring-boot-app    # Path inside repo where your manifests or Helm chart lives
   destination:
