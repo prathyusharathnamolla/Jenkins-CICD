@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: spring-boot-app      # Name your app here
+  namespace: argocd          # Argo CD is installed in this namespace
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/your-username/your-gitops-repo.git'  # Your Git repo URL
+    targetRevision: HEAD
+    path: spring-boot-app    # Path inside repo where your manifests or Helm chart lives
+  destination:
+    server: 'https://kubernetes.default.svc'  # Kubernetes API server (default for same cluster)
+    namespace: default       # Target namespace to deploy your app into
+  syncPolicy:
+    automated:
+      prune: true           # Automatically delete resources that are no longer defined in Git
+      selfHeal: true        # Automatically fix any drift between Git and cluster
